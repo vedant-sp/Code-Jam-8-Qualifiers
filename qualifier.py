@@ -26,6 +26,10 @@ def make_table(rows: List[List[Any]], labels: Optional[List[Any]] = None, center
 
     #Convert Every row to str
     rows = [list(map(str,row)) for row in rows]
+
+    #Convert Labels to Str
+    if labels is not None:
+    	labels = list(map(str, labels))
     
     #Check number of columns
     col_length=len(rows[0])
@@ -56,8 +60,9 @@ def make_table(rows: List[List[Any]], labels: Optional[List[Any]] = None, center
     tab += f"{right_upper_corner}\n"
 
     #Labels Printing
-    tab += f'{vertical}'
+    
     if labels is not None:
+    	tab += f'{vertical}'
     	j = 0
     	for label in labels:
     		remaining_spaces = cell_width[j]-len(label)
@@ -72,11 +77,12 @@ def make_table(rows: List[List[Any]], labels: Optional[List[Any]] = None, center
     	tab += "\n"
 
     #Create "├────────────┼───────────┼─────────┤" After labels
-    tab += f'{left_row_partition}'
-    for i in cell_width:
-    	tab += f'{horizontal}'*(i+2) + f'{mid_row_partition}'
-    tab = tab[:-1]
-    tab += f'{right_row_partition}\n'
+    if labels is not None:
+    	tab += f'{left_row_partition}'
+    	for i in cell_width:
+    		tab += f'{horizontal}'*(i+2) + f'{mid_row_partition}'
+    	tab = tab[:-1]
+    	tab += f'{right_row_partition}\n'
 
 
 
@@ -106,17 +112,14 @@ def make_table(rows: List[List[Any]], labels: Optional[List[Any]] = None, center
     return tab
 
 
-table = make_table(
-	rows=[
-                    ["Pneumonoultramicroscopicsilicovolcanoconiosis"],
-                    ["Hippopotomonstrosesquippedaliophobia"],
-                    ["Supercalifragilisticexpialidocious"],
-                    ["Pseudopseudohypoparathyroidism"],
-                    ["Floccinaucinihilipilification"],
-                    ["Antidisestablishmentarianism"],
-                    ["."]
+table =make_table(
+            rows=[
+                    ["Apple", 5, 70, "Red", 76],
+                    ["Banana", 3, 5, "Yellow", 8],
+                    ["Cherry", 7, 31, "Red", 92],
+                    ["Kiwi", 4, 102, "Green", 1],
+                    ["Strawberry", 6, 134, "Red", 28]
                 ],
-                labels=["My Favourite Long Words"],
-                centered=True
-)
+                # labels=["Fruit", "Tastiness", "Sweetness", "Colour", "Smell"]
+        )
 print(table)
